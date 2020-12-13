@@ -12,8 +12,11 @@ CRUD: CREATE, READ, UPDATE and DELETE
 */
 
 const express = require('express')
+const bodyParser = require('body-parser');
 const app = express()
 const port = 3000
+
+app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
   res.send('Hello World')
@@ -32,9 +35,16 @@ app.get('/mensagens', (req,res) => {
 app.get('/mensagens/:id', (req, res) => {
   const id = req.params.id;
   const mensagem = mensagens[id];
-
   res.send(mensagem)
+});
+//-[POST] /mensagens -> Cria uma nova mensagem
+app.post('/mensagens', (req, res) => {
+  const mensagem = req.body.mensagem;
+  
+  console.log(mensagem);
+  res.send(mensagem);
 })
+
 
 app.listen(port, () => {
   console.log(`Está rodando na porta http://localhost:${port}`)
